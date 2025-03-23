@@ -57,7 +57,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('user_show',['user'=> $this->user->find($id)]);
     }
 
     /**
@@ -91,6 +91,12 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $deleted = $this->user->find($id)->delete();
+        if($deleted){
+            return redirect()->route('users.index')->with('messege',"Deletado com sucesso");
+        }else{
+            return redirect()->route('users.index')->with("messege", 'Erro ao excluir registro!');
+
+        }
     }
 }
